@@ -14,7 +14,7 @@ function About() {
     style={{
       backgroundImage:
         "linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/media/images/img-2.jpg')",
-        height:'60vh'
+        height:'35vh'
     }}
   >
   <Header />

@@ -252,7 +252,6 @@ export default function Header() {
           style={{display:'flex', alignItems:'center'}}
         >
         <img src={logo} className="App-logo" style={{height:40}} alt="Yvan logo"/>
-         <span className="logo-name">Yvan</span>
         </Typography>
         <div className="absolute top-2/4 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
           <NavList />
@@ -292,7 +291,7 @@ export default function Header() {
       text: 'This feature is coming soon!',
     })}
     variant="filled" color="orange">
-    Book Now    
+    Book    
     </Button>
       </Menu>
       </div>
