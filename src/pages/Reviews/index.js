@@ -146,6 +146,7 @@ sx={{
   width: 200,
   display: 'flex',
   alignItems: 'center',
+  paddingTop:10
 }}
 >
 <Rating

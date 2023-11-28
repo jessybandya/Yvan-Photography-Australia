@@ -43,7 +43,10 @@ function About() {
   </center>
   <center style={{color:'#F57500', fontSize:25, fontWeight:'bold', marginTop:8}}>Yvan Kulimushi</center>
   <center style={{color:'#fff', fontSize:15, marginTop:3}}><i>Hello, I'm Yvan, a passionate photographer based in Australia, capturing moments that resonate with life's beauty and essence.</i></center>
-  <TableContainer style={{display:'table', margin:'auto', width: 450, marginTop:20, border:'2px solid #F57500', background:'transparent' }} component={Paper}>
+  <TableContainer style={{display:'table', margin:'auto', 
+  width: '100%',
+  maxWidth: 450, // Set maximum width to 350px
+  marginTop:20, border:'2px solid #F57500', background:'transparent' }} component={Paper}>
   <Table aria-label="simple table">
     <TableBody>
       {rows.map((row) => (
