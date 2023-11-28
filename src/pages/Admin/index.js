@@ -5,6 +5,7 @@ import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 import { Card, Tab, TabPanel, Tabs, TabsBody, TabsHeader } from '@material-tailwind/react'
 import TotalCard from '../../components/TotalCard';
+import Gallery from './Gallery';
 
 function Admin() {
   return (
@@ -57,7 +58,7 @@ style={{background:'#fff', borderRadius:10}}
 
 </TabPanel>
 <TabPanel key={2} value={2}>
-Orders
+ <Gallery />
 </TabPanel>
 <TabPanel key={3} value={3}>
 Seeds

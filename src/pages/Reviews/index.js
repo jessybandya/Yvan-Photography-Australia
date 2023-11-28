@@ -1,12 +1,108 @@
 import React from 'react'
 import { motion } from 'framer-motion';
-import { Breadcrumbs, Button } from '@material-tailwind/react';
+import { Breadcrumbs, Textarea } from '@material-tailwind/react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Typewriter from 'typewriter-effect';
 import Swal from 'sweetalert2';
+import Box from '@mui/material/Box';
+import Rating from '@mui/material/Rating';
+import StarIcon from '@mui/icons-material/Star';
+import {
+  Card,
+  Input,
+  Checkbox,
+  Button,
+  Typography,
+} from "@material-tailwind/react";
+import { db } from '../../firebase';
+import { toast } from 'react-toastify';
+import Review from './Review';
+
+const labels = {
+  0.5: 'Useless',
+  1: 'Useless+',
+  1.5: 'Poor',
+  2: 'Poor+',
+  2.5: 'Ok',
+  3: 'Ok+',
+  3.5: 'Good',
+  4: 'Good+',
+  4.5: 'Excellent',
+  5: 'Excellent+',
+};
+
 
 function Reviews() {
+  const value = 3.5;
+  const [value1, setValue1] = React.useState(0);
+  const [fullName, setFullName] = React.useState('')
+  const [message, setMessage] = React.useState('')
+  const [loading, setLoading] = React.useState(false)
+  const reviewID = db.collection('reviews').doc().id
+  const [reviews, setReviews] = React.useState([])
+
+  React.useEffect(() => {
+    db.collection('reviews').orderBy("timestamp","desc").onSnapshot(snapshot => {
+      setReviews(snapshot.docs.map(doc => ({
+            id: doc.id,
+            post: doc.data(),
+        })));
+    })
+}, []);
+
+
+  const sendReview = () => {
+    setLoading(true)
+
+    if(!fullName){
+      toast.error('Please enter your full name!',{
+        position: "top-center",
+      })
+      setLoading(false)
+    }else if(!message){
+      toast.error('Please enter your message!',{
+        position: "top-center",
+      })
+      setLoading(false)
+    }else if(value1 === 0){
+      toast.error('Please rate with at least a star!',{
+        position: "top-center",
+      })
+      setLoading(false)
+    }else{
+      setLoading(true)
+      db.collection('reviews').doc(reviewID).set({
+        fullName:fullName,
+        message:message,
+        timestamp:Date.now(),
+        value:value1,
+        reviewID
+      }).then(() => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Review sent successfully!',
+          showConfirmButton: false,
+          timer: 2000
+        })
+      })
+      setLoading(false)
+      setFullName('')
+      setMessage('')
+      setValue1(0)
+    }
+  }
+
+  const totalRatings = (reviews.reduce((a,v) =>  a = a + v.post.value , 0 ))
+  const numberOfRatings = reviews.length
+  const rating = totalRatings / numberOfRatings
+  var a = Math.round(rating * 10) / 10
+  var b = reviews.length
+
+  const date = new Date;
+let hours = date.getHours();
+let status = (hours < 12)? "Good Morning" : (hours >= 12 && hours < 16)? "Good Afternoon" : (hours >= 16 && hours < 19)? "Good Evening" : (hours >= 19 && hours < 12)? "Good Night" : ((hours <= 12 && hours >= 12 ) ? "Good Morning" : "Good Night");
+
   return (
     <div
     className="bg-cover bg-center"
@@ -38,14 +134,90 @@ display:'table',
     </svg>
   </a>
   <a style={{color:'#fff', fontWeight:'bold'}} href="/reviews">
-    <span>Reviews</span>
+    <span>{reviews.length} Review(s)</span>
   </a>
 </Breadcrumbs>
   </div>
 
 
+<center style={{paddingTop:30}}>
+<Box
+sx={{
+  width: 200,
+  display: 'flex',
+  alignItems: 'center',
+}}
+>
+<Rating
+  name="text-feedback"
+  value={a}
+  readOnly
+  precision={0.5}
+  emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+/><span>({numberOfRatings === 0 ?(<>0</>):(<>{a}</>)})</span>
+<Box sx={{ ml: 2, fontSize:16, fontWeight:'bold', color:'#F57500' }}>{labels[a]}</Box>
+</Box>
+</center>
+
+<center>
+<form className="mt-2 w-96 max-w-screen-lg sm:w-96">
+<div className="mb-1 flex flex-col gap-6">
+<Input
+size="lg"
+label="Full Name"
+color="orange"
+value={fullName}
+ onChange={(e) => setFullName(e.target.value)}
+/>
 
 
+  <Textarea color="orange"
+  placeholder={`${status}, we would love to hear from you!`}
+  value={message}
+   onChange={(e) => setMessage(e.target.value)}
+  />
+
+  <center style={{marginTop:-15}}>
+<Rating
+name="simple-controlled"
+value={value1}
+onChange={(event, newValue) => {
+  setValue1(newValue);
+}}
+/>
+</center>
+
+</div>
+
+<Button onClick={sendReview} className="mt-3" color="orange" fullWidth>
+  {loading ? "Sending...": "Send Review"}
+</Button>
+</form>
+</center>
+
+<div
+style={{
+  display:'table',
+  margin:'auto',
+  marginLeft:0
+}}
+>
+{reviews.length === 0 ? (
+  <center style={{color:'#fff', marginTop:30}}>loading...</center>
+  ):(
+    <>
+    {reviews.map(({id, post}) => (
+      <Review 
+      key={id}
+      fullName={post.fullName}
+      message={post.message}
+      timestamp={post.timestamp}
+      value={post.value}
+      />
+    ))}  
+    </>
+  )}
+</div>
   
   </div>
   )

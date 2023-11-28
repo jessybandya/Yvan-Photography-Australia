@@ -1,12 +1,60 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion';
 import { Breadcrumbs, Button } from '@material-tailwind/react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Typewriter from 'typewriter-effect';
 import Swal from 'sweetalert2';
+import { db } from '../../firebase';
+import { ImageList } from '@mui/material';
+import Post from './Post';
 
 function Albums() {
+  const [posts, setPosts] = React.useState([])
+  const pageSize = 10; // Number of posts per page
+  const [currentPage, setCurrentPage] = useState(() => {
+    const savedPage = localStorage.getItem("currentPage");
+    return savedPage ? parseInt(savedPage, 5) : 1;
+  });
+const [prevPage, setPrevPage] = useState(1);
+
+  const totalPages = Math.ceil(posts.length / pageSize);
+
+   React.useEffect(() => {
+       db.collection('albums').orderBy("timestamp","asc").onSnapshot(snapshot => {
+           setPosts(snapshot.docs.map(doc => ({
+               id: doc.id,
+               post: doc.data(),
+           })));
+       })
+   }, []);
+
+// Handle page change
+const handlePageChange = (event, page) => {
+setCurrentPage(page);
+};
+
+// Save the currentPage to localStorage when it changes
+useEffect(() => {
+  localStorage.setItem("currentPage", currentPage);
+}, [currentPage]);
+
+// Get the posts for the current page
+const getCurrentPosts = () => {
+const startIndex = (currentPage - 1) * pageSize;
+const endIndex = startIndex + pageSize;
+return posts.slice(startIndex, endIndex);
+};
+
+useEffect(() => {
+// Save the current page before updating the data
+setPrevPage(currentPage);
+}, [posts]);
+
+useEffect(() => {
+// Set the current page back to its previous value after data update
+setCurrentPage(prevPage);
+}, [prevPage]);
   return (
     <div
     className="bg-cover bg-center"
@@ -43,7 +91,30 @@ display:'table',
 </Breadcrumbs>
   </div>
 
+  <div style={{marginTop:25, display:'flex', alignItems:'center', flexWrap:'wrap', justifyContent:'center'}}>
 
+  {
+    posts?.length > 0 ?(
+      <>
+      {
+         getCurrentPosts().map(({id, post}) => (
+             <Post
+             key={id} 
+             albumId={id}
+             images={post.images}
+             name={post.name}
+             timestamp={post.timestamp}
+             ownerId={post.ownerId}
+             />
+           ))
+}
+      </>
+   ):(
+     <div style={{display:'table',margin:'auto',fontSize:18}}>loading...</div>
+   )
+  }
+
+  </div>
 
 
   

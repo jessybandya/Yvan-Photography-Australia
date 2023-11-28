@@ -11,6 +11,7 @@ import Contact from './pages/Contact';
 import Albums from './pages/Albums';
 import Reviews from './pages/Reviews';
 import Admin from './pages/Admin';
+import Images from './pages/Albums/Images';
 
 
 function App() {
@@ -23,9 +24,10 @@ function App() {
     <Route exact path="/albums" element={<Albums />} />
     <Route exact path="/reviews" element={<Reviews />} />
     <Route exact path="/admin" element={<Admin />} />
+    <Route exact path="/our-gallery/images/:id" element={<Images />} />
     <Route exact path="*" element={<Nofound />} />
     </Routes>
-    <ChatBox phoneNumber="+254746749307"/>
+    <ChatBox phoneNumber="+61414973850"/>
     </>
   );
 }

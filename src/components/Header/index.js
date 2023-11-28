@@ -145,6 +145,7 @@ export default function Header() {
   const [currentUser, setCurrentUser] = React.useState(null);
   const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
+  const quoteID = db.collection('quotes').doc().id
 
   const handleScroll = () => {
     const offset = window.scrollY;
@@ -176,36 +177,74 @@ export default function Header() {
     });
   }, []);
 
-
   const submitQuote = () => {
-    Swal.fire({
-      icon: 'info',
-      title: 'Coming Soon',
-      text: 'This feature is coming soon!',
-    })
-    // setLoading(true);
-    // if (name === '' || email === '' || phoneNumber === '' || message === '') {
-    //   toast.error('Please fill all fields!', {
-    //     position: toast.POSITION.TOP_CENTER
-    //   });
-    //   setLoading(false);
-    //   return;
-    // } else {
-    //   const senderDetails = `*Quote Request*\n*Name:* ${name}\n*Phone Number:* ${phoneNumber}\n*Email:* ${email}`;
-    //   const messageWithSenderDetails = `${senderDetails}\n\n*Message*\n${message}`;
-    
-    //   const formattedMessage = encodeURIComponent(messageWithSenderDetails);
+    setLoading(true)
 
-    //   const whatsAppLink = `https://api.whatsapp.com/send?phone=${receiver}&text=${formattedMessage}`;
-  
-    //   window.open(whatsAppLink, '_blank');
-    //   setLoading(false);
-    //   setName('');
-    //   setEmail('');
-    //   setPhoneNumber('');
-    //   setMessage('');
-    //   setOpenQuote(false);
-    // }
+    if(!name){
+      toast.error('Please enter your full name!',{
+        position: "top-center",
+      })
+      setLoading(false)
+    }else if(!email){
+      toast.error('Please enter your email address!',{
+        position: "top-center",
+      })
+      setLoading(false)
+    }else if(!phoneNumber){
+      toast.error('Please enter your phone number!',{
+        position: "top-center",
+      })
+      setLoading(false)
+    }else if(!message){
+      toast.error('Please enter your message!',{
+        position: "top-center",
+      })
+      setLoading(false)
+    }else{
+      setLoading(true)
+      db.collection('quotes').doc(quoteID).set({
+        fullName:name,
+        email:email,
+        phoneNumber:phoneNumber,
+        message:message,
+        timestamp:Date.now(),
+        quoteID
+      }).then(() => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Message sent successfully!',
+          showConfirmButton: false,
+          timer: 2000
+        })
+        sendViaEmail()
+        setLoading(false)
+        setName('')
+        setEmail('')
+        setPhoneNumber('')
+        setMessage('')
+      }).catch((error) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: error.message,
+        })
+        setLoading(false)
+      })
+    }
+  }
+
+  const sendViaEmail = async () => {
+    const recipientEmail = 'yvan.kulimushi@gmail.com';
+    const subject = encodeURIComponent(
+      `Website Quote Form Submission From ${name}`
+    );
+    const body = encodeURIComponent(
+      `Dear Admin,\n${message}\n\nFull Name: ${name}\nEmail: ${email}\nPhone Number: ${phoneNumber}.`
+    );
+
+    const mailtoLink = `mailto:${recipientEmail}?subject=${subject}&body=${body}`;
+
+    window.open(mailtoLink, "_blank");
   };
  
   const handleOpenQuote = () => setOpenQuote(!openQuote);
@@ -277,11 +316,7 @@ export default function Header() {
       />
       </MenuHandler>
 
-    <Button onClick={() =>     Swal.fire({
-      icon: 'info',
-      title: 'Coming Soon',
-      text: 'This feature is coming soon!',
-    })} style={{background:'#F57500', marginRight:5}}>
+    <Button onClick={() => setOpenQuote(true)} style={{background:'#F57500', marginRight:5}}>
     Quote    
     </Button>
     <Button className="blinking-button" 

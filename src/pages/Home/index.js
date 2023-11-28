@@ -39,7 +39,7 @@ function Home() {
     <Button
     style={{background:'#F57500', marginTop:25}}>View My Portfolio</Button>
 </a>
-   <div style={{marginTop:30}}>
+   <div style={{marginTop:50}}>
    <Footer />
    </div>
 
