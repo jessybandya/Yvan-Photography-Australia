@@ -140,13 +140,14 @@ display:'table',
   </div>
 
 
-<center style={{paddingTop:30}}>
+<center>
 <Box
 sx={{
-  width: 200,
+  maxWidth: 200,
   display: 'flex',
   alignItems: 'center',
-  paddingTop:10
+  paddingTop:5,
+  width: '100%',
 }}
 >
 <Rating

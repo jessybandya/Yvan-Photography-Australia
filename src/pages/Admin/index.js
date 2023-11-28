@@ -6,6 +6,7 @@ import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 import { Card, Tab, TabPanel, Tabs, TabsBody, TabsHeader } from '@material-tailwind/react'
 import TotalCard from '../../components/TotalCard';
 import Gallery from './Gallery';
+import Bookings from './Bookings';
 
 function Admin() {
   return (
@@ -52,7 +53,7 @@ animate={{
 style={{background:'#fff', borderRadius:10}}
 >
 <TabPanel key={0} value={0}>
- 
+  <Bookings />
 </TabPanel>
 <TabPanel key={1} value={1}>
 

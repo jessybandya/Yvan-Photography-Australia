@@ -272,7 +272,7 @@ export default function Header() {
   return (
     <>
             {/* loader   */}
-            <div className="loader">
+            <div style={{zIndex:99999999}} className="loader">
             <div className="loading-text-container "><span className="loading-text">Load<strong>ing</strong></span> <span className="loader_count">0</span></div>
             <div className="loader-anim" />
             <div className="loader-anim2 color-bg" />
@@ -319,15 +319,12 @@ export default function Header() {
     <Button onClick={() => setOpenQuote(true)} style={{background:'#F57500', marginRight:5}}>
     Quote    
     </Button>
-    <Button className="blinking-button" 
-    onClick={() => Swal.fire({
-      icon: 'info',
-      title: 'Coming Soon',
-      text: 'This feature is coming soon!',
-    })}
-    variant="filled" color="orange">
-    Book    
-    </Button>
+      <a href="/booking">
+      <Button className="blinking-button" 
+      variant="filled" color="orange">
+      Book    
+      </Button>
+      </a>
       </Menu>
       </div>
       <MobileNav open={isNavOpen} className="overflow-scroll">
