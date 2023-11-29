@@ -101,7 +101,7 @@ function Contact() {
   <Card color="transparent" shadow={false} style={{paddingTop:30, borderRadius:10}}>
   <center style={{color:'wheat', fontSize:20, fontWeight:'bold'}}><i>Contact Me</i></center>
   <div style={{display:'flex',justifyContent:'center', padding:10}}>
-     <div style={{display:'flex', flexWrap:'wrap'}}>
+     <div style={{display:'flex', flexWrap:'wrap'}} className='gap-4'>
        <div style={{marginLeft:20, display:'table', margin:'auto'}}>
        <form className="mt-8 mb-2 w-full max-w-screen-lg sm:w-96">
        <div className="mb-1 flex flex-col gap-6">
