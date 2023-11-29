@@ -16,8 +16,14 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { db } from '../../firebase';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import Review from './Review';
+import {
+  Dialog,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
+} from "@material-tailwind/react";
 
 const labels = {
   0.5: 'Useless',
@@ -34,13 +40,13 @@ const labels = {
 
 
 function Reviews() {
-  const value = 3.5;
   const [value1, setValue1] = React.useState(0);
   const [fullName, setFullName] = React.useState('')
   const [message, setMessage] = React.useState('')
   const [loading, setLoading] = React.useState(false)
   const reviewID = db.collection('reviews').doc().id
   const [reviews, setReviews] = React.useState([])
+  const [open, setOpen] = React.useState(false);
 
   React.useEffect(() => {
     db.collection('reviews').orderBy("timestamp","desc").onSnapshot(snapshot => {
@@ -90,6 +96,7 @@ function Reviews() {
       setFullName('')
       setMessage('')
       setValue1(0)
+      setOpen(false)
     }
   }
 
@@ -143,26 +150,63 @@ display:'table',
 <center>
 <Box
 sx={{
-  maxWidth: 150,
-  display: 'flex',
+  maxWidth: 200,
+  display: 'block',
   alignItems: 'center',
-  paddingTop:10,
+  marginTop:8,
   width: '100%',
 }}
 >
-<Rating
+ <div>
+ <Button onClick={() => setOpen(true)} variant="gradient" color='orange'>
+Add Review
+</Button>
+ </div>
+ <div
+ style={{marginTop:5, display:'flex', alignItems:'center'}}
+ >
+ <Rating
   name="text-feedback"
   value={a}
   readOnly
   precision={0.5}
   emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
-/><span>({numberOfRatings === 0 ?(<>0</>):(<>{a}</>)})</span>
+/><span>({numberOfRatings === 0 ?(<>0/5</>):(<>{a}/5</>)})</span>
 <Box sx={{ ml: 2, fontSize:16, fontWeight:'bold', color:'#F57500' }}>{labels[a]}</Box>
+ </div>
 </Box>
 </center>
 
-<center style={{marginLeft:20, display:'table', margin:'auto'}}>
-<form className="mt-8 mb-2 w-full max-w-screen-lg sm:w-96">
+
+
+<div
+style={{
+  display:'table',
+  margin:'auto',
+  marginLeft:0
+}}
+>
+{reviews.length === 0 ? (
+  <center style={{color:'#fff', marginTop:30}}>loading...</center>
+  ):(
+    <>
+    {reviews.map(({id, post}) => (
+      <Review 
+      key={id}
+      fullName={post.fullName}
+      message={post.message}
+      timestamp={post.timestamp}
+      value={post.value}
+      />
+    ))}  
+    </>
+  )}
+</div>
+
+<Dialog open={open} handler={() => setOpen(false)}>
+<DialogBody>
+<ToastContainer />
+<form className="w-full max-w-screen-lg">
 <div className="mb-1 flex flex-col gap-6">
 <Input
 size="lg"
@@ -195,31 +239,13 @@ onChange={(event, newValue) => {
   {loading ? "Sending...": "Send Review"}
 </Button>
 </form>
-</center>
-
-<div
-style={{
-  display:'table',
-  margin:'auto',
-  marginLeft:0
-}}
->
-{reviews.length === 0 ? (
-  <center style={{color:'#fff', marginTop:30}}>loading...</center>
-  ):(
-    <>
-    {reviews.map(({id, post}) => (
-      <Review 
-      key={id}
-      fullName={post.fullName}
-      message={post.message}
-      timestamp={post.timestamp}
-      value={post.value}
-      />
-    ))}  
-    </>
-  )}
-</div>
+</DialogBody>
+<DialogFooter>
+  <Button variant="gradient" color="red" onClick={() => setOpen(false)}>
+    <span>Cancel</span>
+  </Button>
+</DialogFooter>
+</Dialog>
   
   </div>
   )

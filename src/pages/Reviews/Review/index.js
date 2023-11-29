@@ -1,4 +1,3 @@
-import { DislikeFilled, DislikeOutlined, LikeFilled, LikeOutlined } from '@ant-design/icons';
 import { Rating } from '@mui/material';
 import { Avatar, Comment, Tooltip } from 'antd';
 import moment from 'moment';
