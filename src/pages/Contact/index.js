@@ -102,8 +102,8 @@ function Contact() {
   <center style={{color:'wheat', fontSize:20, fontWeight:'bold'}}><i>Contact Me</i></center>
   <div style={{display:'flex',justifyContent:'center', padding:10}}>
      <div style={{display:'flex', flexWrap:'wrap'}}>
-       <div style={{marginLeft:20}}>
-       <form className="mt-8 mb-2 w-96 max-w-screen-lg sm:w-96">
+       <div style={{marginLeft:20, display:'table', margin:'auto'}}>
+       <form className="mt-8 mb-2 w-full max-w-screen-lg sm:w-96">
        <div className="mb-1 flex flex-col gap-6">
        <Input
        size="lg"
@@ -144,7 +144,7 @@ function Contact() {
        </Button>
      </form>
        </div>
-       <div style={{marginLeft:20, background:'#fff', height:350, borderRadius:10, padding:8}} className="mt-8 mb-2 w-96 max-w-screen-lg sm:w-96">
+       <div style={{background:'#fff', height:350, borderRadius:10, padding:8}} className="mt-8 mb-2 w-full max-w-screen-lg sm:w-96">
          <center><img src='/media/images/img-5.jpg' alt='Yvan' style={{height:150, width:150, borderRadius:75, border:'2px solid #F57500'}}/></center>
          <center style={{fontSize:18}}><b><i>Yvan Kulimushi</i></b></center>
          <br />

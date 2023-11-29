@@ -143,10 +143,10 @@ display:'table',
 <center>
 <Box
 sx={{
-  maxWidth: 200,
+  maxWidth: 150,
   display: 'flex',
   alignItems: 'center',
-  paddingTop:5,
+  paddingTop:10,
   width: '100%',
 }}
 >
@@ -161,8 +161,8 @@ sx={{
 </Box>
 </center>
 
-<center>
-<form className="mt-2 w-96 max-w-screen-lg sm:w-96">
+<center style={{marginLeft:20, display:'table', margin:'auto'}}>
+<form className="mt-8 mb-2 w-full max-w-screen-lg sm:w-96">
 <div className="mb-1 flex flex-col gap-6">
 <Input
 size="lg"
