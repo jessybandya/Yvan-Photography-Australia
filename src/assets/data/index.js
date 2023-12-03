@@ -1,44 +1,40 @@
 const headerLinks = [
     {
-        name:'Home',
+        name:'HOME',
         link:'/'
     },
     {
-        name:'About Me',
-        link:'/about-me'
+        name:'ABOUT',
+        link:'/about'
     },
     {
-        name:'Contact Me',
-        link:'/contact-me'
+        name:'CONTACT',
+        link:'/contact'
     },
     {
-        name:'Albums',
+        name:'ALBUMS',
         link:'/albums'
     },
     {
-        name:'Reviews',
+        name:'REVIEWS',
         link:'/reviews'
     },
 ]
 
-const pagesLinks = [
+const homeImgages = [
     
             {
-                name: 'Projects',
-                link: '/projects'
+                image: '/media/images/img-7.jpg',
+                name: 'Engagement'
             },
             {
-                name:'Services',
-                link:'/services'
+                image:'/media/images/img-8.jpg',
+                name:'Wedding'
             },
             {
-                name:'Gallery',
-                link:'/gallery'
-            },
-            {
-                name:'Our Team',
-                link:'/our-team'
-            },
+                image:'/media/images/img-9.jpg',
+                name:'Lifestyle'
+            }
 ]
 
-export { headerLinks, pagesLinks }
+export { headerLinks, homeImgages }

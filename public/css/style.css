@@ -29,18 +29,7 @@ html {
 	overflow-y:scroll;
 	height:100%;
 }
-body {
-	margin: 0;
-	padding: 0;
-	font-weight: 400;
-	font-size: 13px;
-	height:100%;
-	text-align: center;
-	background:#313131;
-	color: #000;
-	font-family: 'Mukta Vaani', sans-serif;
- 
-}
+
 @-o-viewport {
 	width: device-width;
 }
@@ -1040,7 +1029,7 @@ nav.nav-inner {
 }
 .half-hero-wrap {
 	position:absolute;
-	top:30%;
+	top:15%;
 	left:20%;
 }
 .half-hero-wrap h1 {
@@ -1054,12 +1043,12 @@ nav.nav-inner {
 	font-family: 'Oswald', sans-serif;
 }
 .half-hero-wrap h4 {
-	padding-top:20px;
+	padding-top:10px;
 	color:rgba(255,255,255,0.9);
 	text-align:justify;
 	float: left;
     max-width: 550px;
-    font-size: 13px;
+    font-size: 17px;
     font-weight: 600;
 }
 .hhw_header {
@@ -3138,7 +3127,7 @@ section.parallax-section .bg {
 .hhw-vis.half-hero-wrap{
 	z-index:10;
 	left:150px;
-	top:26%
+	top:0%
 }
 .hhw-vis.half-hero-wrap h1 {
 	font-size:60px;
@@ -3276,7 +3265,6 @@ section.parallax-section .bg {
     height: 70px;
 	display:inline-block;
     border-radius: 50%;
-    text-align: center;
 	background:#fff;
 }
 .chart canvas {
@@ -4773,7 +4761,7 @@ section.parallax-section .bg {
 
 @media only screen and (max-height: 600px) {
 .half-hero-wrap {
-	top:15%;
+	top:0%;
 }
 .half-hero-wrap h1 {
 	font-size: 40px;
@@ -5112,7 +5100,8 @@ section.parallax-section .bg {
 	right:50px;
 }
 .half-hero-wrap {
-	top:20%;
+	top:15%;
+	right: 5%;
 }
 .scroll-notifer {
     top: 50px;
@@ -5293,7 +5282,7 @@ section.parallax-section .bg {
 	line-height:36px;
 }
 .half-hero-wrap h4 ,   .hhw-vis.half-hero-wrap h4{
-	font-size:11px;
+	font-size:13px;
 }
 .half-hero-wrap , .fhhw .half-hero-wrap{
 	left:30px;
@@ -5302,10 +5291,7 @@ section.parallax-section .bg {
     font-size: 10px;
     padding-bottom: 10px;
 }
-.share-btn {
-    width: 80px;
-	text-align: center;
-}
+
 .share-btn span {
 	left: 0;
 	width:100%;

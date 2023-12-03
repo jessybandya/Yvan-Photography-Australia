@@ -20,15 +20,18 @@ function createData(name, calories) {
 const rows = [
   createData('Name', 'Yvan Kulimushi'),
   createData('Career', 'Professional Photographer'),
+  createData('Email', 'yvan.kulimushi@gmail.com'),
+  createData('Phone Number', '+61414973850'),
+  createData('Location', 'Brisbane, Australia'),
   createData('Experience', '4+ Years'),
-  createData('Awards', '15'),
-  createData('Rate', '4.5/5'),
+  createData('Speciality', 'Wedding, Portrait, Event, Family')
+  
 ];
 
 function About() {
   return (
     <div
-    className="bg-cover bg-center h-full sm:h-screen"
+    className="bg-cover bg-center h-full sm:h-full"
 
     style={{
       backgroundImage:
@@ -41,11 +44,9 @@ function About() {
   >
   <img src='/media/images/img-5.jpg' style={{width:150, height:150, borderRadius:75, border:'3px solid #F57500'}} />
   </center>
-  <center style={{color:'#F57500', fontSize:25, fontWeight:'bold', marginTop:8}}>Yvan Kulimushi</center>
-  <center style={{color:'#fff', fontSize:15, marginTop:3}}><i>Hello, I'm Yvan, a passionate photographer based in Australia, capturing moments that resonate with life's beauty and essence.</i></center>
   <TableContainer style={{display:'table', margin:'auto', 
   width: '100%',
-  maxWidth: 450, // Set maximum width to 350px
+  maxWidth: 650, // Set maximum width to 350px
   marginTop:20, border:'2px solid #F57500', background:'transparent' }} component={Paper}>
   <Table aria-label="simple table">
     <TableBody>
@@ -65,8 +66,7 @@ function About() {
   </Table>
 </TableContainer>
   </div>
-  <Footer />
-  
+  <Footer />  
   </div>
   )
 }

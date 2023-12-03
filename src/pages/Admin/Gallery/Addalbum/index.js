@@ -4,7 +4,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify"
-import { Button, Card, CardBody, Input } from '@material-tailwind/react'
+import { Button, Card, CardBody, Input, Option, Select } from '@material-tailwind/react'
 import { db, storage } from '../../../../firebase';
 import firebase from 'firebase';
 
@@ -15,7 +15,12 @@ function Addalbum({ setModalShow }) {
     const history = useNavigate("");
     const [selectedImages, setSelectedImages] = useState([]);
     const [loading, setLoading] = useState(false)
+    const [visibility, setVisibility] = useState('')
+    const [code, setCode] = useState('')
 
+    const handleChangeVisibility=(e)=>{
+      setVisibility(e);
+   }
 
 
 
@@ -36,13 +41,18 @@ function Addalbum({ setModalShow }) {
       const onUpload = async () => {
         setLoading(true);
         const albumId = db.collection('albums').doc().id
-
-      
+        if(visibility === 'public'){
+                
         if (!albumName) {
           toast.error("Album Name is required!", {
             position: toast.POSITION.TOP_CENTER,          
           })
             setLoading(false)
+        }else if (!visibility) {
+          toast.error("Kindly select visibility!", {
+            position: toast.POSITION.TOP_CENTER,
+          });
+          setLoading(false);
         }else if (!selectedImages || selectedImages.length === 0) {
           toast.error("Kindly add at least one image!", {
             position: toast.POSITION.TOP_CENTER,
@@ -76,6 +86,8 @@ function Addalbum({ setModalShow }) {
               timestamp: Date.now(),
               name: albumName,
               albumId: albumId,
+              visibility: 'public',
+              code: ''
             });
       
             toast.success("Successfully uploaded photos!",{
@@ -84,11 +96,84 @@ function Addalbum({ setModalShow }) {
             setSelectedImages([]);
             setModalShow(false);
             setLoading(false);
+            setAlbumName("");
+            setVisibility('')
+            setCode('')
           } catch (error) {
             console.error("Error uploading images:", error);
             toast.error("Error uploading images. Please try again.");
             setLoading(false);
           }
+        }
+        }else{
+                
+        if (!albumName) {
+          toast.error("Album Name is required!", {
+            position: toast.POSITION.TOP_CENTER,          
+          })
+            setLoading(false)
+        }else if (!visibility) {
+          toast.error("Kindly select visibility!", {
+            position: toast.POSITION.TOP_CENTER,
+          });
+          setLoading(false);
+        }else if (!code) {
+          toast.error("Kindly add a code!", {
+            position: toast.POSITION.TOP_CENTER,
+          });
+          setLoading(false);
+        }else if (!selectedImages || selectedImages.length === 0) {
+          toast.error("Kindly add at least one image!", {
+            position: toast.POSITION.TOP_CENTER,
+          });
+          setLoading(false);
+        } else {
+          try {
+            setLoading(true);
+      
+            const storageRef = storage.ref(`images/${albumId}`);
+      
+            const promises = selectedImages.map(async (file) => {
+              const fileRef = storageRef.child(file.name);
+              await fileRef.put(file);
+              
+              const downloadURL = await fileRef.getDownloadURL();
+      
+              return {
+                name: file.name,
+                url: downloadURL,
+                timestamp: Date.now(),
+                comment: albumName,
+              };
+            });
+      
+            const uploadedImages = await Promise.all(promises);
+      
+            // Update Firestore with the array of uploaded images
+            db.collection("albums").doc(albumId).set({
+              images: firebase.firestore.FieldValue.arrayUnion(...uploadedImages),
+              timestamp: Date.now(),
+              name: albumName,
+              albumId: albumId,
+              visibility: 'private',
+              code: code
+            });
+      
+            toast.success("Successfully uploaded photos!",{
+              position: toast.POSITION.TOP_CENTER,
+            });
+            setSelectedImages([]);
+            setModalShow(false);
+            setLoading(false);
+            setAlbumName("");
+            setVisibility('')
+            setCode('')
+          } catch (error) {
+            console.error("Error uploading images:", error);
+            toast.error("Error uploading images. Please try again.");
+            setLoading(false);
+          }
+        }
         }
       };
 
@@ -96,12 +181,6 @@ function Addalbum({ setModalShow }) {
     <Card className="mx-auto w-full">
     <CardBody className="flex flex-col gap-4">
     <ToastContainer />
-
-           <center>
-         <Typography component="h5" variant="h5">
-           <i>Add Album</i>
-         </Typography>
-           </center>
           <Input
             color="orange"
             fullWidth
@@ -109,6 +188,29 @@ function Addalbum({ setModalShow }) {
             label="Create Album Name"
             value={albumName} onChange={onAlbumNameChange}
           /> 
+          <div style={{display:'flex', alignItems:'center', justifyContent:'space-between'}}>
+            <div>
+            <Select onChange={handleChangeVisibility}
+            fullWidth
+            value={visibility}
+            label="Visibilty" color="orange">
+            <Option value="public">Public</Option>
+            <Option value="private">Private</Option>
+            </Select>
+            </div>
+             {visibility === 'private' &&(
+              <div>
+              <Input
+              color="orange"
+              fullWidth
+              id="text"
+              label="Code"
+              value={code} 
+              onChange={(e) => setCode(e.target.value)}
+            /> 
+              </div>
+             )}
+          </div>
 
           <Input
           color='orange'

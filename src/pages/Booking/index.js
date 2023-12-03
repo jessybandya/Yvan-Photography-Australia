@@ -32,8 +32,15 @@ function Booking() {
   const [hours, setHours] = React.useState(0)
   const [selectedDateTime, setSelectedDateTime] = useState(dayjs(Date.now()));
   const currentDateTime = dayjs(Date.now());
-  const amount = hours * 200
+   const [amount, setAmount] = React.useState(0)
   const bookingID = Math.floor(Math.random() * 1000000000)
+
+
+  React.useEffect(() => {
+    db.collection("amount").doc(`JtXTonTljnEsuw8yHsL3`).onSnapshot((doc) => {
+      setAmount(doc.data());
+    });
+}, [])
 
   const convertToEpochTimestamp = (dateTime) => {
     const epochTimestamp = dateTime.unix();
@@ -89,7 +96,7 @@ function Booking() {
         fullName:fullName,
         email:email,
         phoneNumber:phoneNumber,
-        amount: hours * 200,
+        amount: hours * amount?.amount,
         hours,
         timestamp:Date.now(),
         bookingColID,
@@ -150,7 +157,7 @@ function Booking() {
   <div style={{display:'flex',justifyContent:'center', padding:10}}>
      <div style={{display:'flex', flexWrap:'wrap'}} className='gap-4'>
      <div style={{marginLeft:20, display:'table', margin:'auto'}}>
-     <form className="mt-8 mb-2 w-full max-w-screen-lg sm:w-96">
+     <form className="mt-1 mb-2 w-full max-w-screen-lg sm:w-96">
        <div className="mb-1 flex flex-col gap-6">
        <Input
        size="lg"
@@ -182,24 +189,24 @@ function Booking() {
          <Select onChange={handleChangeHours}
          value={hours}
          label="Select Hours" style={{ color: '#fff' }} color="orange">
-         <Option value={1}>1 Hours</Option>
-         <Option value={1.5}>1.5 Hours</Option>
+         <Option value={1}>1 Hour</Option>
+         <Option value={1.5}>1 Hour 30 mins</Option>
          <Option value={2}>2 Hours</Option>
-         <Option value={2.5}>2.5 Hours</Option>
+         <Option value={2.5}>2 Hours 30 mins</Option>
          <Option value={3}>3 Hours</Option>
-         <Option value={3.5}>3.5 Hours</Option>
+         <Option value={3.5}>3 Hours 30 mins</Option>
          <Option value={4}>4 Hours</Option>
-         <Option value={4.5}>4.5 Hours</Option>
+         <Option value={4.5}>4 Hours 30 mins</Option>
          <Option value={5}>5 Hours</Option>
-         <Option value={5.5}>5.5 Hours</Option>
+         <Option value={5.5}>5 Hours 30 mins</Option>
          <Option value={6}>6 Hours</Option>
-         <Option value={6.5}>6.5 Hours</Option>
+         <Option value={6.5}>6 Hours 30 mins</Option>
          <Option value={7}>7 Hours</Option>
-         <Option value={7.5}>7.5 Hours</Option>
+         <Option value={7.5}>7 Hours 30 mins</Option>
          <Option value={8}>8 Hours</Option>
-         <Option value={8.5}>8.5 Hours</Option>
+         <Option value={8.5}>8 Hours 30 mins</Option>
          <Option value={9}>9 Hours</Option>
-         <Option value={9.5}>9.5 Hours</Option>
+         <Option value={9.5}>9 Hours 30 mins</Option>
          <Option value={10}>10 Hours</Option>
          </Select>
          </div>
@@ -223,63 +230,13 @@ function Booking() {
        className="mt-5 grid h-19 place-items-center"
      >
        <Typography variant="h5" color="white">
-         AUD {numberWithCommas(amount.toFixed(2))}
+         AUD {numberWithCommas((amount?.amount * hours).toFixed(2))}
        </Typography>
      </CardHeader>
        <Button onClick={bookNow} className="mt-3" color="orange" fullWidth>
          {loading ? "Booking...": "Book Now"}
        </Button>
      </form>
-       </div>
-       <div style={{background:'#fff', height:350, borderRadius:10, padding:8}} className="mt-8 mb-2 w-full max-w-screen-lg sm:w-96">
-         <center><img src='/media/images/img-5.jpg' alt='Yvan' style={{height:150, width:150, borderRadius:75, border:'2px solid #F57500'}}/></center>
-         <center style={{fontSize:18}}><b><i>Yvan Kulimushi</i></b></center>
-         <br />
-         <hr />
-         <center style={{color:'#F57500', fontSize:18}}><b><i>Australia, Brisbane</i></b></center>
-         <center className={classes}>
-             <div style={{display:'flex', alignItems:'center', justifyContent:'space-between'}}>
-             <Typography
-             variant="small"
-             color="orange"
-             className="font-normal"
-           >
-             <EmailIcon />
-           </Typography>
-
-           <Typography
-           variant="small"
-           color="orange"
-           className="font-bold"
-         >
-           <a href="mailto:yvan.kulimushi@gmail.com" target='_blank'>
-           yvan.kulimushi@gmail.com
-           </a>
-         </Typography>
-             </div>
-         </center>
-
-         <center className={classes}>
-         <div style={{display:'flex', alignItems:'center', justifyContent:'space-between', marginTop:-50}}>
-         <Typography
-         variant="small"
-         color="orange"
-         className="font-normal"
-       >
-         <LocalPhoneIcon />
-       </Typography>
-
-       <Typography
-       variant="small"
-       color="orange"
-       className="font-bold"
-     >
-       <a href="tel:+61414973850">
-       +61414973850
-       </a>
-     </Typography>
-         </div>
-     </center>
        </div>
      </div>
   </div>

@@ -4,8 +4,8 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
  
 export default function Footer() {
   return (
-    <footer>
-    <div className="flex w-full flex-col items-center justify-center md:flex-row md:justify-between py-2 px-4 lg:px-8 lg:py-4">
+    <footer className="footer-main">
+    <div className="footer-main flex w-full flex-col items-center justify-center md:flex-row md:justify-between py-2 px-4 lg:px-8 lg:py-4">
     <Typography
       variant="small"
       className="mb-4 text-center font-normal text-blue-gray-200 md:mb-0"

@@ -5,9 +5,12 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Typewriter from 'typewriter-effect';
 import Swal from 'sweetalert2';
+import { ImageList, ImageListItem, ImageListItemBar } from '@mui/material';
+import { homeImgages } from '../../assets/data';
 
 function Home() {
   return (
+    <>
     <div
     className="bg-cover bg-center h-screen"
     style={{
@@ -16,7 +19,7 @@ function Home() {
     }}
   >
   <Header />
-  <motion.div style={{marginTop:50}}
+  <motion.div
   initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1 }}
@@ -31,21 +34,34 @@ function Home() {
         }}
         />
     </div>
-    <h1>Hi, I am Yvan Kulimushi <br /><span> Based in Australia, Brisbane.</span></h1>
+    <h1>Yvan Photography <br /><span> Based in Australia, Brisbane.</span></h1>
     <h4>Embrace the artistry and elegance of photography. Yvan's vision brings forth a world of grace and sophistication, inviting you to see through a lens that reveals the extraordinary in the ordinary.</h4>
     <div className="clearfix" />
-
-    <a href='/albums'>
-    <Button
-    style={{background:'#F57500', marginTop:25}}>View My Portfolio</Button>
-</a>
-   <div style={{marginTop:50}}>
-   <Footer />
-   </div>
-
+    <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
+    {homeImgages.map((item) => (
+      <ImageListItem key={item.name} className="image-list-item"
+      >
+      <img
+      srcSet={`${item.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+      src={`${item.image}?w=164&h=164&fit=crop&auto=format`}
+      alt={item.name}
+      loading="lazy"
+      style={{height:150, width:150, border:'1px #F57500 solid'}}
+    />
+      <i>
+      <ImageListItemBar
+      style={{color:'#F57500'}}
+        title={item.name}
+      />
+      </i>
+      </ImageListItem>
+    ))}
+    </div>
   </div>
   </motion.div>
   </div>
+  <Footer />
+  </>
   )
 }
 

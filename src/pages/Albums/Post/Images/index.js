@@ -1,11 +1,11 @@
 import { ImageListItem, ImageListItemBar } from '@mui/material'
 import React from 'react'
 
-function Images({ images, name, timestamp }) {
+function Images({ images, name, timestamp, visibility, code }) {
     const d = timestamp;
     const date = new Date(+d);
   return (
-    <ImageListItem>
+    <ImageListItem className='image-list-item'>
     <img
     srcSet={`${images[0]?.url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
     src={`${images[0]?.url}?w=164&h=164&fit=crop&auto=format`}
@@ -15,7 +15,7 @@ function Images({ images, name, timestamp }) {
   />
     <ImageListItemBar
       title={name}
-      subtitle={date.toDateString()}
+      subtitle={<span>({visibility})</span>}
     />
   </ImageListItem>
   )

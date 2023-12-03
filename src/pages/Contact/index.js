@@ -1,6 +1,6 @@
 import React from 'react'
 import { motion } from 'framer-motion';
-import { Avatar, Breadcrumbs, Button, Card, Input, Textarea, Typography } from '@material-tailwind/react';
+import { Avatar, Breadcrumbs, Button, Card, Input, Option, Select, Textarea, Typography } from '@material-tailwind/react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Typewriter from 'typewriter-effect';
@@ -10,6 +10,64 @@ import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import { toast } from 'react-toastify';
 import { db } from '../../firebase';
 
+const AustraliaPlaces = [
+  'Adelaide',
+  'Albany',
+  'Alice Springs',
+  'Armidale',
+  'Ballarat',
+  'Bathurst',
+  'Bendigo',
+  'Blue Mountains',
+  'Brisbane',
+  'Broken Hill',
+  'Broome',
+  'Bunbury',
+  'Bundaberg',
+  'Burnie',
+  'Cairns',
+  'Canberra',
+  'Coffs Harbour',
+  'Darwin',
+  'Devonport',
+  'Dubbo',
+  'Geelong',
+  'Geraldton',
+  'Gladstone',
+  'Gold Coast',
+  'Goulburn',
+  'Hervey Bay',
+  'Hobart',
+  'Kalgoorlie-Boulder',
+  'Karratha',
+  'Launceston',
+  'Lismore',
+  'Mackay',
+  'Maitland',
+  'Melbourne',
+  'Mildura',
+  'Mount Gambier',
+  'Newcastle',
+  'Orange',
+  'Perth',
+  'Port Augusta',
+  'Port Hedland',
+  'Port Lincoln',
+  'Rockhampton',
+  'Sunshine Coast',
+  'Sydney',
+  'Tamworth',
+  'Toowoomba',
+  'Townsville',
+  'Wagga Wagga',
+  'Warrnambool',
+  'Wollongong',
+  // Add more places as needed
+];
+
+// Sort the places alphabetically
+const sortedPlaces = AustraliaPlaces.sort();
+
 function Contact() {
   const [fullName, setFullName] = React.useState('')
   const [email, setEmail] = React.useState('')
@@ -17,6 +75,12 @@ function Contact() {
   const [message, setMessage] = React.useState('')
   const [loading, setLoading] = React.useState(false)
   const contactMeID = db.collection('contact-me').doc().id
+  const [address, setAddress] = React.useState('')
+
+  const handleChangeAddress = (selectedAddress) => {
+    setAddress(selectedAddress);
+    // Handle selected address logic here
+  };
 
   const sendContactMessage = () => {
     setLoading(true)
@@ -36,6 +100,11 @@ function Contact() {
         position: "top-center",
       })
       setLoading(false)
+    }else if(!address){
+      toast.error('Please enter your address!',{
+        position: "top-center",
+      })
+      setLoading(false)
     }else if(!message){
       toast.error('Please enter your message!',{
         position: "top-center",
@@ -49,13 +118,12 @@ function Contact() {
         phoneNumber:phoneNumber,
         message:message,
         timestamp:Date.now(),
+        address:address,
         contactMeID
       }).then(() => {
         Swal.fire({
           icon: 'success',
           title: 'Message sent successfully!',
-          showConfirmButton: false,
-          timer: 2000
         })
         sendViaEmail()
         setLoading(false)
@@ -63,6 +131,7 @@ function Contact() {
         setEmail('')
         setPhoneNumber('')
         setMessage('')
+        setAddress('')
       }).catch((error) => {
         Swal.fire({
           icon: 'error',
@@ -90,7 +159,7 @@ function Contact() {
   const classes = "p-4";
   return (
     <div
-    className="bg-cover bg-center h-full sm:h-screen"
+    className="bg-cover bg-center h-full sm:h-full"
 
     style={{
       backgroundImage:
@@ -101,9 +170,9 @@ function Contact() {
   <Card color="transparent" shadow={false} style={{paddingTop:30, borderRadius:10}}>
   <center style={{color:'wheat', fontSize:20, fontWeight:'bold'}}><i>Contact Me</i></center>
   <div style={{display:'flex',justifyContent:'center', padding:10}}>
-     <div style={{display:'flex', flexWrap:'wrap'}} className='gap-4'>
+     <div>
        <div style={{marginLeft:20, display:'table', margin:'auto'}}>
-       <form className="mt-8 mb-2 w-full max-w-screen-lg sm:w-96">
+       <form className="mt-1 mb-2 w-full max-w-screen-lg sm:w-96">
        <div className="mb-1 flex flex-col gap-6">
        <Input
        size="lg"
@@ -130,6 +199,22 @@ function Contact() {
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
          />
+
+         <div style={{ position: 'relative', zIndex: 999 }}>
+         <Select
+         onChange={handleChangeAddress}
+         value={address}
+         label="Select your address..."
+         style={{ color: '#fff' }}
+         color="orange"
+       >
+         {sortedPlaces.map((place) => (
+           <Option key={place} value={place}>
+             {place}
+           </Option>
+         ))}
+       </Select>
+         </div>
      
          <Textarea color="orange" label="Message"
          value={message}
@@ -143,56 +228,6 @@ function Contact() {
          {loading ? "Contacting...": "Contact Me"}
        </Button>
      </form>
-       </div>
-       <div style={{background:'#fff', height:350, borderRadius:10, padding:8}} className="mt-8 mb-2 w-full max-w-screen-lg sm:w-96">
-         <center><img src='/media/images/img-5.jpg' alt='Yvan' style={{height:150, width:150, borderRadius:75, border:'2px solid #F57500'}}/></center>
-         <center style={{fontSize:18}}><b><i>Yvan Kulimushi</i></b></center>
-         <br />
-         <hr />
-         <center style={{color:'#F57500', fontSize:18}}><b><i>Australia, Brisbane</i></b></center>
-         <center className={classes}>
-             <div style={{display:'flex', alignItems:'center', justifyContent:'space-between'}}>
-             <Typography
-             variant="small"
-             color="orange"
-             className="font-normal"
-           >
-             <EmailIcon />
-           </Typography>
-
-           <Typography
-           variant="small"
-           color="orange"
-           className="font-bold"
-         >
-           <a href="mailto:yvan.kulimushi@gmail.com" target='_blank'>
-           yvan.kulimushi@gmail.com
-           </a>
-         </Typography>
-             </div>
-         </center>
-
-         <center className={classes}>
-         <div style={{display:'flex', alignItems:'center', justifyContent:'space-between', marginTop:-50}}>
-         <Typography
-         variant="small"
-         color="orange"
-         className="font-normal"
-       >
-         <LocalPhoneIcon />
-       </Typography>
-
-       <Typography
-       variant="small"
-       color="orange"
-       className="font-bold"
-     >
-       <a href="tel:+61414973850">
-       +61414973850
-       </a>
-     </Typography>
-         </div>
-     </center>
        </div>
      </div>
   </div>

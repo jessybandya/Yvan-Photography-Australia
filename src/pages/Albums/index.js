@@ -8,6 +8,8 @@ import Swal from 'sweetalert2';
 import { db } from '../../firebase';
 import { ImageList } from '@mui/material';
 import Post from './Post';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 function Albums() {
   const [posts, setPosts] = React.useState([])
@@ -19,6 +21,13 @@ function Albums() {
 const [prevPage, setPrevPage] = useState(1);
 
   const totalPages = Math.ceil(posts.length / pageSize);
+  const [open, setOpen] = React.useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
    React.useEffect(() => {
        db.collection('albums').orderBy("timestamp","asc").onSnapshot(snapshot => {
@@ -105,12 +114,19 @@ display:'table',
              name={post.name}
              timestamp={post.timestamp}
              ownerId={post.ownerId}
+             visibility={post.visibility}
+             code = {post.code}
              />
            ))
 }
       </>
    ):(
-     <div style={{display:'table',margin:'auto',fontSize:18}}>loading...</div>
+    <Backdrop
+    sx={{ color: '#fff', zIndex: 99999 }}
+    open={open}
+  >
+    loading...<CircularProgress color="inherit" />
+  </Backdrop>
    )
   }
 

@@ -4,7 +4,7 @@ import Post from './Post'
 import { db } from '../../../../firebase';
 
 
-function Allusers({ filteredPosts, searchTerm }) {
+function Allbookings({ filteredPosts, searchTerm }) {
       const [posts, setPosts] = React.useState([])
       const pageSize = 10; // Number of posts per page
       const [currentPage, setCurrentPage] = useState(() => {
@@ -16,7 +16,7 @@ function Allusers({ filteredPosts, searchTerm }) {
       const totalPages = Math.ceil(posts.length / pageSize);
   
        React.useEffect(() => {
-           db.collection('albums').orderBy("timestamp","desc").onSnapshot(snapshot => {
+           db.collection('quotes').orderBy("timestamp","desc").onSnapshot(snapshot => {
                setPosts(snapshot.docs.map(doc => ({
                    id: doc.id,
                    post: doc.data(),
@@ -58,12 +58,11 @@ const getCurrentPosts = () => {
         <TableHead sx={{ display: "table-header-group" }}>
           <TableRow>
           <TableCell style={{minWidth:100,fontSize:13,backgroundColor: "",fontWeight:"900",borderBottom: "2px solid #F76D28",color:"#F76D28"}}>No.</TableCell>
-          <TableCell style={{minWidth:100,fontSize:13,backgroundColor: "",fontWeight:"900",borderBottom: "2px solid #F76D28",color:"#F76D28"}} align="right">ALBUM NAME</TableCell>
-          <TableCell style={{minWidth:100,fontSize:13,backgroundColor: "",fontWeight:"900",borderBottom: "2px solid #F76D28",color:"#F76D28"}} align="right">NO. IMAGES</TableCell>
-          <TableCell style={{minWidth:100,fontSize:13,backgroundColor: "",fontWeight:"900",borderBottom: "2px solid #F76D28",color:"#F76D28"}} align="right">VIEW</TableCell>
-          <TableCell style={{minWidth:100,fontSize:13,backgroundColor: "",fontWeight:"900",borderBottom: "2px solid #F76D28",color:"#F76D28"}} align="right">VISIBILITY</TableCell>
-          <TableCell style={{minWidth:100,fontSize:13,backgroundColor: "",fontWeight:"900",borderBottom: "2px solid #F76D28",color:"#F76D28"}} align="right">CODE</TableCell>
-          <TableCell style={{minWidth:100,fontSize:13,backgroundColor: "",fontWeight:"900",borderBottom: "2px solid #F76D28",color:"#F76D28"}} align="right">REGISTERED</TableCell>
+          <TableCell style={{minWidth:100,fontSize:13,backgroundColor: "",fontWeight:"900",borderBottom: "2px solid #F76D28",color:"#F76D28"}} align="right">F. NAME</TableCell>
+          <TableCell style={{minWidth:100,fontSize:13,backgroundColor: "",fontWeight:"900",borderBottom: "2px solid #F76D28",color:"#F76D28"}} align="right">EMAIL</TableCell>
+          <TableCell style={{minWidth:100,fontSize:13,backgroundColor: "",fontWeight:"900",borderBottom: "2px solid #F76D28",color:"#F76D28"}} align="right">PHONE</TableCell>
+          <TableCell style={{minWidth:100,fontSize:13,backgroundColor: "",fontWeight:"900",borderBottom: "2px solid #F76D28",color:"#F76D28"}} align="right">MESSAGE</TableCell>
+          <TableCell style={{minWidth:100,fontSize:13,backgroundColor: "",fontWeight:"900",borderBottom: "2px solid #F76D28",color:"#F76D28"}} align="right">DATE SENT</TableCell>
           <TableCell style={{minWidth:100,fontSize:13,backgroundColor: "",fontWeight:"900",borderBottom: "2px solid #F76D28",color:"#F76D28"}} align="right">ACTIONS</TableCell>
           </TableRow>
         </TableHead>
@@ -75,14 +74,13 @@ const getCurrentPosts = () => {
                 getCurrentPosts().map(({id, post}, index) => (
                     <Post
                     key={id} 
-                    name={post.name}
-                    albumId={id}
-                    images={post.images}
-                    ownerId={post.ownerId}
-                    timestamp={post.timestamp}
+                    fullName={post.fullName}
+                    quoteID={id}
+                    email={post.email}
+                    message={post.message}
                     number={index+1}
-                    visibility={post.visibility}
-                    code = {post.code}
+                    phone={post.phoneNumber}
+                    selectedDateTime={post.timestamp}                 
                     />
                   ))
   }
@@ -99,14 +97,13 @@ const getCurrentPosts = () => {
                            filteredPosts.map((posts2, index) => (
  
  <Post 
- name={posts2.name}
- albumId={posts2.albumId}
- images={posts2.images}
- ownerId={posts2.ownerId}
- timestamp={posts2.timestamp}
+ fullName={posts2.fullName}
+ quoteID={posts2.quoteID}
+ email={posts2.email}
+ message={posts2.message}
  number={index+1}
- visibility={posts2.visibility}
- code = {posts2.code}
+ phone={posts2.phoneNumber}
+ selectedDateTime={posts2.timestamp}     
  />
  ))
                            }
@@ -136,4 +133,4 @@ const getCurrentPosts = () => {
   )
 }
 
-export default Allusers
+export default Allbookings

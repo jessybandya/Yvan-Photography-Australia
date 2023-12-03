@@ -213,8 +213,6 @@ export default function Header() {
         Swal.fire({
           icon: 'success',
           title: 'Message sent successfully!',
-          showConfirmButton: false,
-          timer: 2000
         })
         sendViaEmail()
         setLoading(false)
@@ -222,6 +220,7 @@ export default function Header() {
         setEmail('')
         setPhoneNumber('')
         setMessage('')
+        setOpenQuote(false)
       }).catch((error) => {
         Swal.fire({
           icon: 'error',
@@ -356,14 +355,14 @@ export default function Header() {
   <DialogBody divider>
   <ToastContainer />
     <div className="grid gap-6">
-      <Input value={name} onChange={(e) => setName(e.target.value)} color="orange" label="Full Name" />
+      <Input autoFocus={false} value={name} onChange={(e) => setName(e.target.value)} color="orange" label="Full Name" />
       <Input value={email} onChange={(e) => setEmail(e.target.value)} color="orange" label="Email" type="email"/>
       <Input value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} color="orange" label="Phone" />
       <Textarea value={message} onChange={(e) => setMessage(e.target.value)} color="orange" label="Message" />
     </div>
 
     <Button className="mt-10" fullWidth onClick={submitQuote} variant="gradient" color="orange">
-    {loading ? <Spinner color="blue" /> : 'Submit'}
+    {loading ? 'Submitting...' : 'Submit'}
   </Button>
   </DialogBody>
 </Dialog1>

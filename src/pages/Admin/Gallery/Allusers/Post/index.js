@@ -11,21 +11,29 @@ import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import Addimages from './Addimages';
-import { Card, CardBody, Input, Button as TailwindButton, Dialog as TailwindDialog } from '@material-tailwind/react';
+import { Card, CardBody, Input, Option, Select, Button as TailwindButton, Dialog as TailwindDialog } from '@material-tailwind/react';
 import { ToastContainer, toast } from 'react-toastify';
 import { db, storage } from '../../../../../firebase';
 import firebase from 'firebase'
+import EditIcon from '@mui/icons-material/Edit';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 
-function Post({ name, albumId, images, ownerId, timestamp, number }) {
+function Post({ name, albumId, images, ownerId, timestamp, number, visibility, code }) {
   const [open, setOpen] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
- const [loading, setLoading] = useState(false)
- const [selectedImages, setSelectedImages] = useState([]);
+  const [loading, setLoading] = useState(false)
+  const [selectedImages, setSelectedImages] = useState([]);
+  const [finalVisibility, setFinalVisibility] = useState('')
+  const [finalCode, setFinalCode] = useState('')
+  const [updateModal, setUpdateModal] = useState(false)
+
+  const handleChangeVisibility=(e)=>{
+    setFinalVisibility(e);
+ }
 
 
 
@@ -51,25 +59,35 @@ function Post({ name, albumId, images, ownerId, timestamp, number }) {
   //NB: use + before variable name
   var date = new Date(+d);
 
-  // const openModal = (firstName, lastName, phone) => {
-  //   setFirstNameUpdate(firstName)
-  //   setLastNameUpdate(lastName)
-  //   setPhoneUpdate(phone)
-  //   setOpen(true)
-  // }
+  const openModal = (visibility, code) => {
+    setFinalVisibility(visibility)
+    setFinalCode(code)
+    setUpdateModal(true)
+  }
 
-  // const updateFun = () => {
-  //   setLoading(true)
-  //   db.collection('users').doc(uid).update({
-  //     firstName: firstNameUpdate,
-  //     lastName: lastNameUpdate,
-  //     phone: phoneUpdate,
-  //   })
-  //   toast.success(`Member has been updated successfully!`, {
-  //     position: "top-center",
-  //     })
-  //     setLoading(false)
-  // }
+  const updateFun = () => {
+    setLoading(true)
+    if(finalVisibility === 'private'){
+      db.collection('albums').doc(albumId).update({
+        visibility: finalVisibility,
+        code: finalCode,
+      })
+      toast.success(`Successfully Updated!`, {
+        position: "top-center",
+        })
+        setLoading(false)
+    }else{
+      db.collection('albums').doc(albumId).update({
+        visibility: finalVisibility,
+        code: '',
+      })
+      toast.success(`Successfully Updated!`, {
+        position: "top-center",
+        })
+        setLoading(false)
+    }
+
+  }
 
   // const entryFun = () => {
   //   setLoading(true)
@@ -221,9 +239,16 @@ function Post({ name, albumId, images, ownerId, timestamp, number }) {
          <RemoveRedEyeIcon onClick={handleClickOpen} style={{color:'#F76D28', cursor: 'pointer'}}/>                  
         </TableCell>
         <TableCell align='right'>
+        {visibility}                   
+        </TableCell>
+        <TableCell align='right'>
+        {visibility === 'private' ? code : 'N/A'}                   
+        </TableCell>
+        <TableCell align='right'>
         {date.toDateString()}                 
         </TableCell>
         <TableCell align='right'>
+        <EditIcon onClick={() => openModal(visibility, code)} style={{color:'#F76D28', cursor: 'pointer', marginRight:5}}/> 
          <DeleteForeverIcon onClick={onDeleteAlbum} style={{color:'#F76D28', cursor: 'pointer'}}/>                
         </TableCell>
 
@@ -300,6 +325,38 @@ function Post({ name, albumId, images, ownerId, timestamp, number }) {
     </CardBody>
   </Card>
     </TailwindDialog>
+
+    <TailwindDialog
+    size="sm"
+    open={updateModal}
+    handler={() => setUpdateModal(false)}
+  >
+  <Card className="mx-auto w-full">
+  <CardBody className="flex flex-col gap-4">
+  <ToastContainer />
+  <Select onChange={handleChangeVisibility}
+  fullWidth
+  value={finalVisibility}
+  label="Visibilty" color="orange">
+  <Option value="public">Public</Option>
+  <Option value="private">Private</Option>
+  </Select>
+
+  {finalVisibility === 'private' &&(
+    <Input
+    color='orange'
+    label="Access Code" size="lg"
+    value={finalCode}
+    onChange={(e) => setFinalCode(e.target.value)}
+    />
+  )}
+
+    <TailwindButton onClick={updateFun} color='orange' variant="gradient"  fullWidth>
+    {loading ? 'Updating...' : 'Update'}
+  </TailwindButton>
+  </CardBody>
+</Card>
+  </TailwindDialog>
   </TableRow>
   )
 }
