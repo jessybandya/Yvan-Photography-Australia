@@ -13,10 +13,12 @@ function Images({ images, name, timestamp, visibility, code }) {
     loading="lazy"
     style={{height:250, width:350}}
   />
-    <ImageListItemBar
-      title={name}
-      subtitle={<span>({visibility})</span>}
-    />
+   <center>
+   <ImageListItemBar
+   title={name}
+   subtitle={<span>({visibility})</span>}
+ />
+   </center>
   </ImageListItem>
   )
 }

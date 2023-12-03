@@ -213,13 +213,15 @@ function Booking() {
      
          <div style={{ position: 'relative', zIndex: 999, background:'#fff' }}>
          <LocalizationProvider dateAdapter={AdapterDayjs}>
-         <MobileDateTimePicker
-            // Gray text color for the input field
-           value={selectedDateTime}
-           onChange={handleDateTimeChange}
-           renderInput={(props) => <Input color='orange' style={{color:'#fff'}} {...props} />} // Example: You can use TextField from MUI
-           minDateTime={currentDateTime} // Disable dates and times less than current date and time
-         />
+          <center>
+          <MobileDateTimePicker
+          // Gray text color for the input field
+         value={selectedDateTime}
+         onChange={handleDateTimeChange}
+         renderInput={(props) => <Input {...props} />} // Example: You can use TextField from MUI
+         minDateTime={currentDateTime} // Disable dates and times less than current date and time
+       />
+          </center>
        </LocalizationProvider>
        </div>
      
