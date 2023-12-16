@@ -159,7 +159,7 @@ function Contact() {
   const classes = "p-4";
   return (
     <div
-    className="bg-cover bg-center h-full sm:h-full"
+    className="bg-cover bg-center h-screen"
 
     style={{
       backgroundImage:
@@ -238,7 +238,6 @@ function Contact() {
 
 
 </Card>
-<Footer />
   </div>
   )
 }

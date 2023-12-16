@@ -144,7 +144,7 @@ function Booking() {
   const classes = "p-4";
   return (
     <div
-    className="bg-cover bg-center h-full sm:h-screen"
+    className="bg-cover bg-center h-screen"
 
     style={{
       backgroundImage:
@@ -185,7 +185,7 @@ function Booking() {
               onChange={(e) => setPhoneNumber(e.target.value)}
          />
 
-         <div style={{ position: 'relative', zIndex: 999 }}>
+         <div style={{ position: 'relative', zIndex: 99999998 }}>
          <Select onChange={handleChangeHours}
          value={hours}
          label="Select Hours" style={{ color: '#fff' }} color="orange">
