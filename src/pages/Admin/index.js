@@ -71,13 +71,13 @@ function Admin() {
 
   React.useEffect(() => {
     db.collection('reviews').onSnapshot((snapshot) => {
-      setContacts(snapshot.docs.map((doc) => doc.data()))
+      setReviews(snapshot.docs.map((doc) => doc.data()))
     })
   }, [])
 
   React.useEffect(() => {
     db.collection('contact-me').onSnapshot((snapshot) => {
-      setReviews(snapshot.docs.map((doc) => doc.data()))
+      setContacts(snapshot.docs.map((doc) => doc.data()))
     })
   }, [])
 

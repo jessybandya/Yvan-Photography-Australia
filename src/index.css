@@ -263,3 +263,6 @@ a{
   opacity: 1; /* Show on hover */
 }
 
+.first-option {
+  margin-top: 45px; /* Adjust the value as needed */
+}

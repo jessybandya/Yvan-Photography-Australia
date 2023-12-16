@@ -183,7 +183,11 @@ Add Review
 style={{
   display:'table',
   margin:'auto',
-  marginLeft:0
+  marginLeft:0,
+  height:'100vh',
+  width:'100%',
+  overflow:'auto',
+  background:'#fff',
 }}
 >
 {reviews.length === 0 ? (

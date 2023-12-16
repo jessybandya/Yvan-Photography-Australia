@@ -8,6 +8,7 @@ import SmsIcon from '@mui/icons-material/Sms';
 import PhoneInTalkIcon from '@mui/icons-material/PhoneInTalk';
 import AddIcon from '@mui/icons-material/Add';
 import EmailIcon from '@mui/icons-material/Email';
+import InstagramIcon from '@mui/icons-material/Instagram';
 
 const ChatBox = ({ phoneNumber }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,7 +26,7 @@ const ChatBox = ({ phoneNumber }) => {
   };
 
   const handleCallClick = () => {
-    window.open(`tel:${phoneNumber}`, '_blank');
+    window.open(`https://www.instagram.com/lens_y_studio?igshid=YzVkODRmOTdmMw%3D%3D&utm_source=qr`, '_blank');
   };
 
   return (
@@ -43,7 +44,7 @@ const ChatBox = ({ phoneNumber }) => {
               <WhatsAppIcon />
             </button>
             <button className="call" onClick={handleCallClick}>
-              <PhoneInTalkIcon />
+              <InstagramIcon />
             </button>
           </div>
         </div>

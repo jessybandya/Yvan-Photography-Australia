@@ -189,13 +189,7 @@ function Booking() {
          <Select onChange={handleChangeHours}
          value={hours}
          label="Select Hours" style={{ color: '#fff' }} color="orange">
-         <Option >
-         </Option>
-                <Option >
-              </Option>
-              <Option >
-              </Option>
-         <Option value={1}>1 Hour</Option>
+         <Option className='first-option' value={1}>1 Hour</Option>
          <Option value={1.5}>1 Hour 30 mins</Option>
          <Option value={2}>2 Hours</Option>
          <Option value={2.5}>2 Hours 30 mins</Option>
