@@ -1029,7 +1029,7 @@ nav.nav-inner {
 }
 .half-hero-wrap {
 	position:absolute;
-	top:15%;
+	top:10%;
 	left:20%;
 }
 .half-hero-wrap h1 {
@@ -1043,10 +1043,9 @@ nav.nav-inner {
 	font-family: 'Oswald', sans-serif;
 }
 .half-hero-wrap h4 {
-	padding-top:10px;
+	padding-top:5px;
 	color:rgba(255,255,255,0.9);
 	text-align:justify;
-	float: left;
     max-width: 550px;
     font-size: 17px;
     font-weight: 600;
@@ -5100,7 +5099,7 @@ section.parallax-section .bg {
 	right:50px;
 }
 .half-hero-wrap {
-	top:15%;
+	top:5%;
 	right: 5%;
 }
 .scroll-notifer {

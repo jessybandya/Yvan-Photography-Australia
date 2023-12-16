@@ -25,17 +25,13 @@ function Home() {
       transition={{ duration: 1 }}
   >
   <div className="half-hero-wrap">
-    <div className="hhw_header">
-    <Typewriter
-    options={{
-        strings: ['Photographer', 'Photographer'],
-        autoStart: true,
-        loop: true,
-        }}
-        />
-    </div>
-    <h1>Yvan Photography <br /><span> Based in Australia, Brisbane.</span></h1>
-    <h4>Embrace the artistry and elegance of photography. Yvan's vision brings forth a world of grace and sophistication, inviting you to see through a lens that reveals the extraordinary in the ordinary.</h4>
+    <center>
+    <img src="/media/images/yvan.png" alt="logo" style={{height:150}} />
+    </center>
+    <h1><span> Based in Australia, Queensland.</span></h1>
+    <h4>
+    Explore LensY Studio: where moments become art. Our skilled photographers craft emotional, timeless images of weddings, events, and fine art. With personalized service, attention to detail, and innovative tech, we turn your story into unforgettable memories. Let us create lasting art from your unique moments.
+    </h4>
     <div className="clearfix" />
     <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
     {homeImgages.map((item) => (
@@ -48,19 +44,24 @@ function Home() {
       loading="lazy"
       style={{height:150, width:150, border:'1px #F57500 solid'}}
     />
-      <i>
-      <ImageListItemBar
-      style={{color:'#F57500'}}
-        title={item.name}
-      />
-      </i>
+    <center>
+    <i>
+    <ImageListItemBar
+    style={{color:'#F57500'}}
+      title={item.name}
+    />
+    </i>
+    </center>
       </ImageListItem>
     ))}
     </div>
   </div>
   </motion.div>
   </div>
+  <div
+  >
   <Footer />
+  </div>
   </>
   )
 }

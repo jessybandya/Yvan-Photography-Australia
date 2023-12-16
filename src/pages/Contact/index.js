@@ -200,7 +200,7 @@ function Contact() {
               onChange={(e) => setPhoneNumber(e.target.value)}
          />
 
-         <div style={{ position: 'relative', zIndex: 999 }}>
+         <div style={{  zIndex: 999 }}>
          <Select
          onChange={handleChangeAddress}
          value={address}
@@ -208,8 +208,15 @@ function Contact() {
          style={{ color: '#fff' }}
          color="orange"
        >
+       <Option >
+</Option>
+       <Option >
+     </Option>
+     <Option >
+     </Option>
+
          {sortedPlaces.map((place) => (
-           <Option key={place} value={place}>
+           <Option  key={place} value={place}>
              {place}
            </Option>
          ))}

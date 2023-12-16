@@ -189,6 +189,12 @@ function Booking() {
          <Select onChange={handleChangeHours}
          value={hours}
          label="Select Hours" style={{ color: '#fff' }} color="orange">
+         <Option >
+         </Option>
+                <Option >
+              </Option>
+              <Option >
+              </Option>
          <Option value={1}>1 Hour</Option>
          <Option value={1.5}>1 Hour 30 mins</Option>
          <Option value={2}>2 Hours</Option>
@@ -218,7 +224,7 @@ function Booking() {
           // Gray text color for the input field
          value={selectedDateTime}
          onChange={handleDateTimeChange}
-         renderInput={(props) => <Input {...props} />} // Example: You can use TextField from MUI
+         renderInput={(props) => <Input  {...props} />} // Example: You can use TextField from MUI
          minDateTime={currentDateTime} // Disable dates and times less than current date and time
        />
           </center>

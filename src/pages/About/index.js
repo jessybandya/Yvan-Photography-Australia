@@ -12,6 +12,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Team from './Team';
 
 function createData(name, calories) {
   return { name, calories };
@@ -22,10 +23,7 @@ const rows = [
   createData('Career', 'Professional Photographer'),
   createData('Email', 'yvan.kulimushi@gmail.com'),
   createData('Phone Number', '+61414973850'),
-  createData('Location', 'Brisbane, Australia'),
-  createData('Experience', '4+ Years'),
-  createData('Speciality', 'Wedding, Portrait, Event, Family')
-  
+  createData('Speciality', 'Wedding, Portrait, Event, Family')  
 ];
 
 function About() {
@@ -42,29 +40,30 @@ function About() {
   <div style={{paddingTop:10}}>
   <center
   >
-  <img src='/media/images/img-5.jpg' style={{width:150, height:150, borderRadius:75, border:'3px solid #F57500'}} />
+  <img src='/media/images/yvan.png' style={{ height:150}} />
   </center>
-  <TableContainer style={{display:'table', margin:'auto', 
-  width: '100%',
-  maxWidth: 650, // Set maximum width to 350px
-  marginTop:20, border:'2px solid #F57500', background:'transparent' }} component={Paper}>
-  <Table aria-label="simple table">
-    <TableBody>
-      {rows.map((row) => (
-        <TableRow
-          key={row.name}
-          sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-          style={{borderBottom:'2px solid #F57500'}}
-        >
-          <TableCell style={{fontWeight:'bold', color:'#F57500'}} component="th" scope="row">
-            {row.name}
-          </TableCell>
-          <TableCell style={{color:'#fff'}} align="right">{row.calories}</TableCell>
-        </TableRow>
-      ))}
-    </TableBody>
-  </Table>
-</TableContainer>
+  <div
+  style={{
+    color:'#fff',
+    fontWeight:'bold',
+    fontSize:15,
+    padding:10,
+  }}
+  >
+  Welcome to <span style={{color:'#F57500', fontStyle:'italic', fontSize:18}}>LensY Studio:</span><br/>
+Embark on a journey where every click tells a captivating story. At Captured Essence, we're experts at capturing moments in time and making real and emotional pictures. Our enthusiastic team of photographers turns everyday events into unforgettable memories. We get to the heart of weddings, photos, events, and fine art by giving you personalised service, paying close attention to detail, and using cutting-edge technology. Your unique story is our canvas, and we can't wait to share it. Step into a world where we transform your memories into everlasting art.
+  </div>
+
+  <center 
+  style={{
+    color:'#F57500',
+    fontWeight:'bold',
+    fontSize:20,
+    padding:10,
+  }}
+  >Meet Our Team</center>
+
+   <Team />
   </div>
   <Footer />  
   </div>

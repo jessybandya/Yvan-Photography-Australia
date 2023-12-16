@@ -32,6 +32,7 @@ import {
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import Reset from './Reset';
+import Team from './Team';
 
 function Admin() {
   const [quotes, setQuotes] = React.useState([])
@@ -39,6 +40,7 @@ function Admin() {
   const [albums, setAlbums] = React.useState([])
   const [reviews, setReviews] = React.useState([])
   const [contacts, setContacts] = React.useState([])
+  const [team, setTeam] = React.useState([])
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
   const [loading, setLoading] = React.useState(false)
@@ -76,6 +78,12 @@ function Admin() {
   React.useEffect(() => {
     db.collection('contact-me').onSnapshot((snapshot) => {
       setReviews(snapshot.docs.map((doc) => doc.data()))
+    })
+  }, [])
+
+  React.useEffect(() => {
+    db.collection('team').onSnapshot((snapshot) => {
+      setTeam(snapshot.docs.map((doc) => doc.data()))
     })
   }, [])
 
@@ -175,7 +183,7 @@ const login = (e)=> {
    </div>
   
    <div className='cards'>
-   <TotalCard title='Team' number={1} icon={GroupIcon} />
+   <TotalCard title='Team' number={team.length} icon={GroupIcon} />
    <TotalCard title='Reviews' number={reviews.length} icon={SupervisedUserCircleIcon} />
    <TotalCard title='Contacts' number={contacts.length} icon={SupervisedUserCircleIcon} />
   </div>
@@ -196,6 +204,9 @@ const login = (e)=> {
   </Tab>
   <Tab key={4} value={4}>
   Contact
+  </Tab>
+  <Tab key={5} value={5}>
+  Team
   </Tab>
   </TabsHeader>
   <TabsBody
@@ -221,16 +232,28 @@ const login = (e)=> {
   <TabPanel key={4} value={4}>
   <Contact />
   </TabPanel>
+  <TabPanel key={5} value={5}>
+  <Team />
+  </TabPanel>
   </TabsBody>
   </Tabs>
       </Card>
       </div>
       </>
     ):(
-      <div
-      style={{display:'table', margin:'auto', paddingTop:80}}
+      <center
+      style={{
+        paddingTop:80
+      }}
       >
-      <Card className="w-96" style={{border:'2px solid #F57500'}}>
+      <Card
+      
+      style={{
+        border:'2px solid #F57500',
+        width: "100%",
+        margin: 1,
+        maxWidth: 350,
+    }}>
       <CardHeader
         variant="gradient"
         color="orange"
@@ -278,7 +301,7 @@ const login = (e)=> {
   >
     Signing in...<CircularProgress color="inherit" />
   </Backdrop>
-      </div>
+      </center>
     )}
 
 
