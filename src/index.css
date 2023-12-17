@@ -239,6 +239,9 @@ a{
 .image-list-item {
   position: relative;
   overflow: hidden;
+  border: 1px solid #F76D28;
+  border-radius: 5px;
+  margin: 1px;
 }
 
 .image-list-item:hover::after {

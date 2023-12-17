@@ -100,7 +100,7 @@ display:'table',
 </Breadcrumbs>
   </div>
 
-  <div style={{marginTop:25, display:'flex', alignItems:'center', flexWrap:'wrap', justifyContent:'center'}}>
+  <div style={{display:'flex', flexWrap:'wrap', justifyContent:'center', height:'100vh', background:'#fff', overflow:'auto'}}>
 
   {
     posts?.length > 0 ?(

@@ -2,26 +2,21 @@ import firebase from 'firebase';
 
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyCz32QzTg0a7iIuDrcEw3ZkmDZoNoLWXek",
-  authDomain: "yvan-app.firebaseapp.com",
-  projectId: "yvan-app",
-  storageBucket: "yvan-app.appspot.com",
-  messagingSenderId: "1020215130344",
-  appId: "1:1020215130344:web:8b577ad206124d1f84715d",
-  measurementId: "G-87BB37N6E8"
+  apiKey: `${process.env.REACT_APP_FIREBASE_API_KEY}`,
+  authDomain:  `${process.env.REACT_APP_FIREBASE_AUTH_DOMAIN}`,
+  projectId: `${process.env.REACT_APP_FIREBASE_PROJECT_ID}`,
+  storageBucket: `${process.env.REACT_APP_FIREBASE_STORAGE_BUCKET}`,
+  messagingSenderId: `${process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID}`,
+  appId: `${process.env.REACT_APP_FIREBASE_APP_ID}`,
+  measurementId: `${process.env.REACT_APP_FIREBASE_MEASUREMENT_ID}`
 };
 
   const firebaseSApp = firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
    const db = firebaseSApp.firestore();
-   const googleProvider = new firebase.auth.GoogleAuthProvider();
-   const facebookProvider = new firebase.auth.FacebookAuthProvider();
-   const TwitterProvider = new firebase.auth.TwitterAuthProvider();
-   const GithubProvider = new firebase.auth.GithubAuthProvider();
    const storage = firebase.storage();
   export default {auth, db, storage};
-  export  {db, googleProvider, facebookProvider, TwitterProvider,GithubProvider};
+  export  {db};
   export  {auth};
   export  {storage};

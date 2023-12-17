@@ -18,7 +18,7 @@ function Reset({ setOpen }) {
           }else{
             setLoading(true)
             const config ={
-                url: `https://yvan-app.web.app/admin`,
+                url: `${process.env.REACT_APP_WEBSITE_URL}/admin`,
                 handleCodeInApp: true
             };
           

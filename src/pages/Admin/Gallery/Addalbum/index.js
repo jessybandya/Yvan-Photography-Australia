@@ -15,7 +15,7 @@ function Addalbum({ setModalShow }) {
     const history = useNavigate("");
     const [selectedImages, setSelectedImages] = useState([]);
     const [loading, setLoading] = useState(false)
-    const [visibility, setVisibility] = useState('')
+    const [visibility, setVisibility] = useState('private')
     const [code, setCode] = useState('')
 
     const handleChangeVisibility=(e)=>{
@@ -190,15 +190,12 @@ function Addalbum({ setModalShow }) {
           /> 
           <div style={{display:'flex', alignItems:'center', justifyContent:'space-between'}}>
             <div>
-            <Select onChange={handleChangeVisibility}
+            <Select
             fullWidth
-            value={visibility}
+            value="private"
             label="Visibilty" color="orange">
-            <Option value="public">Public</Option>
-            <Option value="private">Private</Option>
             </Select>
             </div>
-             {visibility === 'private' &&(
               <div>
               <Input
               color="orange"
@@ -209,7 +206,6 @@ function Addalbum({ setModalShow }) {
               onChange={(e) => setCode(e.target.value)}
             /> 
               </div>
-             )}
           </div>
 
           <Input
