@@ -33,6 +33,8 @@ function Post({images, albumId, albumName}) {
     return date;
   }
 
+
+
   return (
      <>
      {images.length === 0 ?(

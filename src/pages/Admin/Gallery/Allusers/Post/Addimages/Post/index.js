@@ -33,6 +33,8 @@ function Post({images, albumId, albumName}) {
     return date;
   }
 
+  const sortedImages = images.sort((a, b) => b.timestamp - a.timestamp);
+  
   return (
      <>
      {images.length === 0 ?(
@@ -41,7 +43,7 @@ function Post({images, albumId, albumName}) {
       <>
       <ImageList variant="quilted" cols={4} rowHeight={200} 
       >
-        {images.map((image, index) => (
+        {sortedImages.map((image, index) => (
           <ImageListItem
             cols={
               pattern[

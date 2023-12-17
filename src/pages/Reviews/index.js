@@ -184,7 +184,7 @@ style={{
   display:'table',
   margin:'auto',
   marginLeft:0,
-  height:'100vh',
+  height:'65vh',
   width:'100%',
   overflow:'auto',
   background:'#fff',

@@ -17,7 +17,13 @@ function Addimages({albumId}) {
    }, []);
 
   return (
-    <div>
+    <div
+    style={{
+      height: '80vh',
+      overflow: 'auto',
+      backgroundColor: 'white',
+    }}
+    >
     {
       posts.map(({id, post}) => (
          <Post
@@ -26,6 +32,7 @@ function Addimages({albumId}) {
          albumName={post?.name}
          images={post?.images}
          albumId={id}
+         visibility={post?.visibility}
          />
        ))
 }

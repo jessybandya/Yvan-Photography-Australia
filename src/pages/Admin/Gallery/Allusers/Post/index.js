@@ -293,7 +293,7 @@ function Post({ name, albumId, images, ownerId, timestamp, number, visibility, c
     <CardBody className="flex flex-col gap-4">
     <ToastContainer />
       <Input
-      color='green'
+      color='orange'
       type='file'
       label="Upload Images" size="lg"
       multiple
@@ -319,7 +319,7 @@ function Post({ name, albumId, images, ownerId, timestamp, number, visibility, c
       )}
     </div>
 
-      <TailwindButton onClick={onUpload} color='green' variant="gradient"  fullWidth>
+      <TailwindButton onClick={onUpload} color='orange' variant="gradient"  fullWidth>
       {loading ? 'Uploading...' : 'Upload'}
     </TailwindButton>
     </CardBody>

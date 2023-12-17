@@ -29,14 +29,26 @@ const [prevPage, setPrevPage] = useState(1);
     setOpen(true);
   };
 
-   React.useEffect(() => {
-       db.collection('albums').orderBy("timestamp","asc").onSnapshot(snapshot => {
-           setPosts(snapshot.docs.map(doc => ({
-               id: doc.id,
-               post: doc.data(),
-           })));
-       })
-   }, []);
+  React.useEffect(() => {
+    const unsubscribe = db.collection('albums').orderBy("timestamp", "asc").onSnapshot(snapshot => {
+        const posts = snapshot.docs.map(doc => ({
+            id: doc.id,
+            post: doc.data(),
+        }));
+
+        if (posts.length > 1) {
+            const [firstItem, ...rest] = posts;
+            rest.sort((a, b) => b.post.timestamp - a.post.timestamp); // Sorting rest of the items by timestamp
+            const sortedPosts = [firstItem, ...rest]; // Combining the first item and the sorted rest
+
+            setPosts(sortedPosts);
+        } else {
+            setPosts(posts);
+        }
+    });
+
+    return () => unsubscribe();
+}, []);
 
 // Handle page change
 const handlePageChange = (event, page) => {

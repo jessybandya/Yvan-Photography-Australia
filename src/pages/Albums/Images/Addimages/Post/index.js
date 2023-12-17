@@ -19,7 +19,7 @@ function srcset(image, size, rows = 1, cols = 1) {
 }
 
 
-function Post({images, albumId, albumName}) {
+function Post({images, albumId, visibility}) {
   const [isOpen, setIsOpen] = useState(false);
   const [photoIndex, setPhotoIndex] = useState(0);
 
@@ -33,101 +33,198 @@ function Post({images, albumId, albumName}) {
     return date;
   }
 
+  const handleContextMenu = (event) => {
+    event.preventDefault(); // Prevent default context menu behavior
+  };
+
+  const sortedImages = images.sort((a, b) => b.timestamp - a.timestamp);
+
   return (
      <>
      {images.length === 0 ?(
       <center style={{fontWeight:'bold'}}>No Images </center>
      ):(
       <>
-      <ImageList variant="quilted" cols={4} rowHeight={200} 
-      >
-        {images.map((image, index) => (
-          <ImageListItem
-            cols={
-              pattern[
-                index - Math.floor(index / pattern.length) * pattern.length
-              ].cols
-            }
-            rows={
-              pattern[
-                index - Math.floor(index / pattern.length) * pattern.length
-              ].rows
-            }
-            sx={{
-              // opacity: '.7',
-              transition: 'opacity .3s linear',
-              cursor: 'pointer',
-              // '&:hover': { opacity: 1 },
-            }}
-          >
-          <Options
-          imageId={index}
-          uid={image?.fromId}
-          imageURL={image?.url}
-          albumId={albumId}
-          images={images}
-          image={image}
-        />
-
-            <img
-              {...srcset(
-                image?.url,
-                200,
-                pattern[
-                  index - Math.floor(index / pattern.length) * pattern.length
-                ].rows,
+      {visibility === 'private' ?(
+        <>
+        <ImageList variant="quilted" cols={4} rowHeight={200} 
+        >
+          {sortedImages.map((image, index) => (
+            <ImageListItem
+              cols={
                 pattern[
                   index - Math.floor(index / pattern.length) * pattern.length
                 ].cols
-              )}
-              alt={image?.firstName || image?.email?.split('@')[0]}
-              loading="lazy"
-              onClick={() => {
-                setPhotoIndex(index);
-                setIsOpen(true);
-              }}
-            />
-            <Typography
-              variant="body2"
-              component="span"
+              }
+              rows={
+                pattern[
+                  index - Math.floor(index / pattern.length) * pattern.length
+                ].rows
+              }
               sx={{
-                position: 'absolute',
-                bottom: 0,
-                left: 0,
-                color: '#fff',
-                background: 'rgba(0,0,0, .3)',
-                p: '5px',
-                borderTopRightRadius: 8,
+                // opacity: '.7',
+                transition: 'opacity .3s linear',
+                cursor: 'pointer',
+                // '&:hover': { opacity: 1 },
               }}
             >
-            {moment(image?.timestamp).fromNow()}
-            </Typography>
-          </ImageListItem>
-        ))}
-      </ImageList>
-      {isOpen && (
-        <Lightbox
-        style={{zIndex:2000}}
-          mainSrc={images[photoIndex]?.url}
-          nextSrc={
-            images[(photoIndex + 1) % images.length]?.url
-          }
-          prevSrc={
-            images[(photoIndex + images.length - 1) % images.length]
-              ?.url
-          }
-          onCloseRequest={() => setIsOpen(false)}
-          onMoveNextRequest={() =>
-            setPhotoIndex((photoIndex + 1) % images.length)
-          }
-          onMovePrevRequest={() =>
-            setPhotoIndex(
-              (photoIndex + images.length - 1) % images.length
-            )
-          }
-          imageTitle={images[photoIndex]?.comment}
-          imageCaption={timestampFun(images[photoIndex]?.timestamp)?.toDateString()}
-        />
+            <Options
+            imageId={index}
+            uid={image?.fromId}
+            imageURL={image?.url}
+            albumId={albumId}
+            images={images}
+            image={image}
+          />
+  
+              <img
+                {...srcset(
+                  image?.url,
+                  200,
+                  pattern[
+                    index - Math.floor(index / pattern.length) * pattern.length
+                  ].rows,
+                  pattern[
+                    index - Math.floor(index / pattern.length) * pattern.length
+                  ].cols
+                )}
+                alt={image?.firstName || image?.email?.split('@')[0]}
+                loading="lazy"
+                onClick={() => {
+                  setPhotoIndex(index);
+                  setIsOpen(true);
+                }}
+              />
+              <Typography
+                variant="body2"
+                component="span"
+                sx={{
+                  position: 'absolute',
+                  bottom: 0,
+                  left: 0,
+                  color: '#fff',
+                  background: 'rgba(0,0,0, .3)',
+                  p: '5px',
+                  borderTopRightRadius: 8,
+                }}
+              >
+              {moment(image?.timestamp).fromNow()}
+              </Typography>
+            </ImageListItem>
+          ))}
+        </ImageList>
+        {isOpen && (
+          <Lightbox
+          style={{zIndex:2000}}
+            mainSrc={images[photoIndex]?.url}
+            nextSrc={
+              images[(photoIndex + 1) % images.length]?.url
+            }
+            prevSrc={
+              images[(photoIndex + images.length - 1) % images.length]
+                ?.url
+            }
+            onCloseRequest={() => setIsOpen(false)}
+            onMoveNextRequest={() =>
+              setPhotoIndex((photoIndex + 1) % images.length)
+            }
+            onMovePrevRequest={() =>
+              setPhotoIndex(
+                (photoIndex + images.length - 1) % images.length
+              )
+            }
+            imageTitle={images[photoIndex]?.comment}
+            imageCaption={timestampFun(images[photoIndex]?.timestamp)?.toDateString()}
+          />
+        )}
+        </>
+      ):(
+        <>
+        <ImageList variant="quilted" cols={4} rowHeight={200} 
+        >
+          {sortedImages.map((image, index) => (
+            <ImageListItem
+              cols={
+                pattern[
+                  index - Math.floor(index / pattern.length) * pattern.length
+                ].cols
+              }
+              rows={
+                pattern[
+                  index - Math.floor(index / pattern.length) * pattern.length
+                ].rows
+              }
+              sx={{
+                // opacity: '.7',
+                transition: 'opacity .3s linear',
+                cursor: 'pointer',
+                // '&:hover': { opacity: 1 },
+              }}
+              onContextMenu={handleContextMenu} // Attach context menu event listener
+            >
+  
+              <img
+                {...srcset(
+                  image?.url,
+                  200,
+                  pattern[
+                    index - Math.floor(index / pattern.length) * pattern.length
+                  ].rows,
+                  pattern[
+                    index - Math.floor(index / pattern.length) * pattern.length
+                  ].cols
+                )}
+                alt={image?.firstName || image?.email?.split('@')[0]}
+                loading="lazy"
+                onClick={() => {
+                  setPhotoIndex(index);
+                  setIsOpen(true);
+                }}
+              />
+              <Typography
+                variant="body2"
+                component="span"
+                sx={{
+                  position: 'absolute',
+                  bottom: 0,
+                  left: 0,
+                  color: '#fff',
+                  background: 'rgba(0,0,0, .3)',
+                  p: '5px',
+                  borderTopRightRadius: 8,
+                }}
+              >
+              {moment(image?.timestamp).fromNow()}
+              </Typography>
+            </ImageListItem>
+          ))}
+        </ImageList>
+        {isOpen && (
+          <Lightbox
+          style={{zIndex:2000}}
+            mainSrc={images[photoIndex]?.url}
+            nextSrc={
+              images[(photoIndex + 1) % images.length]?.url
+            }
+            prevSrc={
+              images[(photoIndex + images.length - 1) % images.length]
+                ?.url
+            }
+            onCloseRequest={() => setIsOpen(false)}
+            onMoveNextRequest={() =>
+              setPhotoIndex((photoIndex + 1) % images.length)
+            }
+            onMovePrevRequest={() =>
+              setPhotoIndex(
+                (photoIndex + images.length - 1) % images.length
+              )
+            }
+            imageTitle={images[photoIndex]?.comment}
+            imageCaption={timestampFun(images[photoIndex]?.timestamp)?.toDateString()}
+            onContextMenu={(e) => e.preventDefault()} // Disable context menu for the Lightbox component
+          />
+        )}
+        </>
       )}
       </>
      )}

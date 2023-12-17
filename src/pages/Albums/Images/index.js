@@ -45,7 +45,7 @@ function Images() {
     {post.visibility === 'public' ? (
       <>
       <ImageListItem key="Subheader" cols={2}>
-      <ListSubheader component="div">{post.name}</ListSubheader>
+      <ListSubheader component="div"><center>{post.name}</center></ListSubheader>
     </ImageListItem>
       <div>
       <Addimages albumId={id} />
@@ -56,7 +56,7 @@ function Images() {
        {open ? (
         <>
         <ImageListItem key="Subheader" cols={2}>
-        <ListSubheader component="div">{post.name}</ListSubheader>
+        <ListSubheader component="div"><center>{post.name}</center></ListSubheader>
       </ImageListItem>
         <div>
         <Addimages albumId={id} />
