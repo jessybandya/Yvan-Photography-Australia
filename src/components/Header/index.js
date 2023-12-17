@@ -270,13 +270,6 @@ export default function Header() {
  
   return (
     <>
-            {/* loader   */}
-            <div style={{zIndex:99999999}} className="loader">
-            <div className="loading-text-container "><span className="loading-text">Load<strong>ing</strong></span> <span className="loader_count">0</span></div>
-            <div className="loader-anim" />
-            <div className="loader-anim2 color-bg" />
-          </div>
-          {/* loader  end*/}
     <Navbar style={{width: '100%', zIndex:100}}
     className={`sticky top-0 z-10 h-max max-w-full rounded-none py-2 px-4 lg:px-8 lg:py-4 ${
         isScrolled ? "" : "bg-transparent text-white border-none"
