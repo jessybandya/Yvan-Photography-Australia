@@ -185,7 +185,7 @@ function Booking() {
               onChange={(e) => setPhoneNumber(e.target.value)}
          />
 
-         <div style={{ position: 'relative' }}>
+         <div style={{ position: 'relative', zIndex: 101 }}>
          <Select onChange={handleChangeHours}
          value={hours}
          label="Select Hours" style={{ color: '#fff' }} color="orange">
